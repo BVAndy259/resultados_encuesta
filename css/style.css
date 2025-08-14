@@ -1,115 +1,187 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: "/img/";
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    margin: 0;
-    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+/* Animación de partículas de fondo */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 .container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    padding: 3rem 2.5rem;
+    text-align: center;
     max-width: 500px;
     width: 90%;
+    animation: slideIn 0.8s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 h1 {
+    color: #2d3748;
     font-size: 2.2rem;
-    color: #e91e63;
-    margin-bottom: 10px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    line-height: 1.2;
 }
 
 p {
+    color: #4a5568;
     font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 30px;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
 nav ul {
     list-style: none;
-    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.5rem;
 }
 
-.surprise-link {
+.surprise-link, .message-link {
     display: block;
     text-decoration: none;
-    background-color: #e91e63;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
     color: white;
-    padding: 15px 25px;
-    border-radius: 50px;
-    font-size: 1.2rem;
+    padding: 1.2rem 2rem;
+    border-radius: 15px;
     font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(238, 90, 36, 0.3);
+    position: relative;
+    overflow: hidden;
 }
 
-.surprise-link:hover {
-    background-color: #d81b60;
-    transform: translateY(-3px);
+.surprise-link::before, .message-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
 }
 
+.surprise-link:hover::before, .message-link:hover::before {
+    left: 100%;
+}
+
+.surprise-link:hover, .message-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(238, 90, 36, 0.4);
+}
+
+.surprise-link:active, .message-link:active {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(238, 90, 36, 0.5);
+}
+
+/* Estilo especial para el enlace de Diana */
+#linkDiana {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    box-shadow: 0 8px 25px rgba(9, 132, 227, 0.3);
+}
+
+#linkDiana:hover {
+    box-shadow: 0 15px 35px rgba(9, 132, 227, 0.4);
+}
+
+/* Estilo especial para el mensaje */
 .message-link {
-    display: block;
-    text-decoration: none;
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 50px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+    box-shadow: 0 8px 25px rgba(232, 67, 147, 0.3);
+    margin-top: 1rem;
 }
 
 .message-link:hover {
-    background-color: #43a047;
-    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(232, 67, 147, 0.4);
 }
 
+/* Animación para el elemento oculto */
 #hiddenMessage {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    position: relative;
-    cursor: not-allowed;
+    transition: all 0.5s ease;
 }
 
-#hiddenMessage.visible {
+#hiddenMessage.show {
     opacity: 1;
     transform: translateY(0);
-    cursor: pointer;
 }
 
-#hiddenMessage::before {
-    content: "¡Se revelará después de que elijan su sorpresa!";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none; 
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    p {
+        font-size: 1rem;
+    }
+    
+    .surprise-link, .message-link {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+    }
 }
 
-#hiddenMessage:hover::before {
-    opacity: 1;
+/* Efecto de pulsación sutil */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
 }
 
-#hiddenMessage.visible:hover::before {
-    opacity: 0;
+.container:hover {
+    animation: pulse 2s infinite;
 }
