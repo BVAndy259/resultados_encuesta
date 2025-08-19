@@ -1,370 +1,693 @@
-// Esperar a que el DOM se cargue completamente
+// JavaScript mejorado para la página de Diana
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Elementos del DOM
+    // Referencias a elementos del DOM
     const birthdayAudio = document.getElementById('birthday-audio');
     const container = document.querySelector('.container');
     const birthdayImage = document.querySelector('.birthday-image');
     const surpriseLink = document.querySelector('.surprise-link');
+    const cardItems = document.querySelectorAll('.card li');
+    const quote = document.querySelector('.quote');
     
-    // Configuración de audio
-    if (birthdayAudio) {
-        birthdayAudio.volume = 0.3; // Volumen bajo para no ser molesto
-        
-        // Intentar reproducir el audio (algunos navegadores lo bloquean)
-        birthdayAudio.play().catch(function(error) {
-            console.log('Autoplay bloqueado:', error);
-            // Crear botón para activar música manualmente si es necesario
-            createMusicButton();
-        });
+    // Variables de control
+    let musicButton = null;
+    let isAudioPlaying = false;
+    let interactionCount = 0;
+    
+    // Inicialización
+    initializeAudio();
+    initializeInteractions();
+    initializeVisualEffects();
+    initializePersonalizedContent();
+    
+    // ===== CONFIGURACIÓN DE AUDIO =====
+    
+    function initializeAudio() {
+        if (birthdayAudio) {
+            birthdayAudio.volume = 0.25;
+            birthdayAudio.loop = true;
+            
+            // Intentar reproducir audio automáticamente
+            const playPromise = birthdayAudio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        isAudioPlaying = true;
+                        console.log('🎵 Música de cumpleaños iniciada automáticamente');
+                    })
+                    .catch(error => {
+                        console.log('Autoplay bloqueado:', error);
+                        createMusicButton();
+                    });
+            }
+        }
     }
     
-    // Crear botón de música si el autoplay está bloqueado
     function createMusicButton() {
-        const musicButton = document.createElement('button');
-        musicButton.innerHTML = '🎵 Activar música';
+        musicButton = document.createElement('button');
+        musicButton.innerHTML = '🎵 Activar música de Diana';
+        musicButton.setAttribute('aria-label', 'Reproducir música de cumpleaños');
+        
         musicButton.style.cssText = `
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            top: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 25px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.3);
+            font-size: 0.9rem;
+            box-shadow: 0 8px 25px rgba(168, 237, 234, 0.3);
             z-index: 1000;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         `;
         
-        musicButton.addEventListener('click', function() {
-            if (birthdayAudio) {
-                if (birthdayAudio.paused) {
-                    birthdayAudio.play();
-                    musicButton.innerHTML = '🎵 Pausar música';
-                } else {
-                    birthdayAudio.pause();
-                    musicButton.innerHTML = '🎵 Activar música';
-                }
-            }
-        });
-        
+        // Eventos del botón de música
+        musicButton.addEventListener('click', toggleMusic);
         musicButton.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.1)';
-            this.style.boxShadow = '0 8px 25px rgba(116, 185, 255, 0.4)';
+            this.style.transform = 'scale(1.05) translateY(-2px)';
+            this.style.boxShadow = '0 12px 35px rgba(168, 237, 234, 0.4)';
         });
         
         musicButton.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-            this.style.boxShadow = '0 5px 15px rgba(116, 185, 255, 0.3)';
+            this.style.transform = 'scale(1) translateY(0)';
+            this.style.boxShadow = '0 8px 25px rgba(168, 237, 234, 0.3)';
         });
         
         document.body.appendChild(musicButton);
     }
     
-    // Función para crear emojis flotantes
-    function createFloatingEmoji() {
-        const emojis = ['🎂', '🎉', '🎈', '✨', '🌟', '💫', '🎊', '🥳', '🎁', '💖'];
-        const emoji = document.createElement('div');
-        emoji.classList.add('floating-emoji');
-        emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-        emoji.style.left = Math.random() * 100 + 'vw';
-        emoji.style.animationDuration = (4 + Math.random() * 4) + 's';
-        emoji.style.animationDelay = Math.random() * 2 + 's';
+    function toggleMusic() {
+        if (!birthdayAudio) return;
         
-        document.body.appendChild(emoji);
-        
-        // Remover emoji después de la animación
-        setTimeout(() => {
-            emoji.remove();
-        }, 8000);
-    }
-    
-    // Crear emojis flotantes periódicamente
-    function startFloatingEmojis() {
-        setInterval(createFloatingEmoji, 1500);
-        
-        // Crear algunos emojis inmediatamente
-        for (let i = 0; i < 5; i++) {
-            setTimeout(createFloatingEmoji, i * 300);
+        if (isAudioPlaying) {
+            birthdayAudio.pause();
+            musicButton.innerHTML = '🎵 Activar música';
+            musicButton.style.opacity = '0.7';
+            isAudioPlaying = false;
+        } else {
+            birthdayAudio.play();
+            musicButton.innerHTML = '🎵 Pausar música';
+            musicButton.style.opacity = '1';
+            isAudioPlaying = true;
         }
     }
     
-    // Iniciar emojis flotantes después de un delay
-    setTimeout(startFloatingEmojis, 2000);
+    // ===== INTERACCIONES MEJORADAS =====
     
-    // Efecto de confeti al hacer clic en la imagen de cumpleaños
-    if (birthdayImage) {
-        birthdayImage.addEventListener('click', function() {
-            createConfettiExplosion(event.target);
+    function initializeInteractions() {
+        // Imagen de cumpleaños
+        if (birthdayImage) {
+            birthdayImage.addEventListener('click', handleImageClick);
+            birthdayImage.addEventListener('mouseenter', handleImageHover);
+            birthdayImage.style.cursor = 'pointer';
+            
+            // Agregar imagen por defecto si no existe
+            if (!birthdayImage.src || birthdayImage.src.includes('placeholder')) {
+                birthdayImage.src = 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&h=320&fit=crop&auto=format';
+                birthdayImage.alt = 'Celebración especial de cumpleaños para Diana';
+            }
+        }
+        
+        // Items de la tarjeta
+        cardItems.forEach((item, index) => {
+            item.addEventListener('mouseenter', () => handleItemHover(item, index));
+            item.addEventListener('mouseleave', () => handleItemLeave(item));
+            item.addEventListener('click', () => handleItemClick(item, index));
         });
+        
+        // Cita inspiracional
+        if (quote) {
+            quote.addEventListener('click', handleQuoteClick);
+            quote.style.cursor = 'pointer';
+        }
+        
+        // Contenedor principal
+        if (container) {
+            container.addEventListener('mousemove', handleContainerMouseMove);
+        }
+        
+        // Enlace de regreso
+        if (surpriseLink) {
+            surpriseLink.addEventListener('mouseenter', handleLinkHover);
+            surpriseLink.addEventListener('click', handleLinkClick);
+        }
     }
     
-    // Función para crear explosión de confeti
+    function handleImageClick(event) {
+        createConfettiExplosion(event.target);
+        playImageClickAnimation();
+        incrementInteraction();
+        
+        // Mensaje especial después de varios clics
+        if (interactionCount === 5) {
+            showSpecialMessage();
+        }
+    }
+    
+    function handleImageHover() {
+        birthdayImage.style.filter = 'brightness(1.1) saturate(1.2)';
+    }
+    
+    function handleItemHover(item, index) {
+        item.style.transform = 'translateX(15px) scale(1.03)';
+        item.style.textShadow = '0 3px 12px rgba(168, 237, 234, 0.5)';
+        
+        // Efecto de partículas suaves
+        createItemParticles(item);
+    }
+    
+    function handleItemLeave(item) {
+        item.style.transform = 'translateX(0) scale(1)';
+        item.style.textShadow = 'none';
+    }
+    
+    function handleItemClick(item, index) {
+        playItemAnimation(item);
+        createHeartBurst(item);
+        incrementInteraction();
+    }
+    
+    function handleQuoteClick() {
+        quote.style.animation = 'none';
+        setTimeout(() => {
+            quote.style.animation = 'quotePulse 1s ease-in-out';
+        }, 10);
+        
+        createFloatingHearts(quote);
+        incrementInteraction();
+    }
+    
+    function handleContainerMouseMove(event) {
+        const rect = container.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        
+        // Crear efecto de ondas suaves
+        createGentleRipple(x, y);
+    }
+    
+    function handleLinkHover() {
+        createLinkSparkles(surpriseLink);
+    }
+    
+    function handleLinkClick(event) {
+        event.preventDefault();
+        
+        // Animación de salida
+        container.style.animation = 'containerExit 0.8s ease-in-out forwards';
+        
+        setTimeout(() => {
+            window.location.href = surpriseLink.href;
+        }, 800);
+    }
+    
+    // ===== EFECTOS VISUALES =====
+    
+    function initializeVisualEffects() {
+        startFloatingEmojis();
+        startBackgroundAnimation();
+        addPersonalizedTouchesForDiana();
+    }
+    
     function createConfettiExplosion(element) {
         const rect = element.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         
-        const colors = ['#ff6b6b', '#74b9ff', '#fd79a8', '#55a3ff', '#feca57', '#00b894'];
+        const dianaColors = ['#a8edea', '#fed6e3', '#d299c2', '#fef9d7', '#89f7fe', '#66a6ff'];
         
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 40; i++) {
             const confetti = document.createElement('div');
             confetti.style.cssText = `
                 position: fixed;
                 width: 8px;
                 height: 8px;
-                background: ${colors[Math.floor(Math.random() * colors.length)]};
+                background: ${dianaColors[Math.floor(Math.random() * dianaColors.length)]};
                 left: ${centerX}px;
                 top: ${centerY}px;
                 z-index: 1000;
                 pointer-events: none;
                 border-radius: 50%;
+                box-shadow: 0 0 6px rgba(168, 237, 234, 0.6);
             `;
             
-            const angle = (Math.PI * 2 * i) / 30;
-            const velocity = 50 + Math.random() * 100;
-            const gravity = 0.5;
+            document.body.appendChild(confetti);
+            
+            // Animar cada confetti
+            const angle = (Math.PI * 2 * i) / 40;
+            const velocity = 60 + Math.random() * 80;
+            const gravity = 0.6;
             let velocityX = Math.cos(angle) * velocity;
             let velocityY = Math.sin(angle) * velocity;
             let posX = centerX;
             let posY = centerY;
+            let rotation = 0;
             
-            document.body.appendChild(confetti);
-            
-            function animate() {
+            function animateConfetti() {
                 velocityY += gravity;
-                posX += velocityX * 0.02;
-                posY += velocityY * 0.02;
+                posX += velocityX * 0.015;
+                posY += velocityY * 0.015;
                 velocityX *= 0.99;
                 velocityY *= 0.99;
+                rotation += 3;
                 
                 confetti.style.left = posX + 'px';
                 confetti.style.top = posY + 'px';
-                confetti.style.transform = `rotate(${posX + posY}deg)`;
+                confetti.style.transform = `rotate(${rotation}deg)`;
+                confetti.style.opacity = Math.max(0, parseFloat(confetti.style.opacity || 1) - 0.008);
                 
-                if (posY < window.innerHeight + 100) {
-                    requestAnimationFrame(animate);
+                if (parseFloat(confetti.style.opacity || 1) > 0 && posY < window.innerHeight + 100) {
+                    requestAnimationFrame(animateConfetti);
                 } else {
                     confetti.remove();
                 }
             }
             
-            animate();
+            animateConfetti();
         }
     }
     
-    // Efectos de hover mejorados
-    if (container) {
-        container.addEventListener('mousemove', function(e) {
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            // Crear ondas sutiles
-            const ripple = document.createElement('div');
-            ripple.style.cssText = `
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(116, 185, 255, 0.1);
-                transform: scale(0);
-                animation: ripple 1s linear;
-                left: ${x - 10}px;
-                top: ${y - 10}px;
-                width: 20px;
-                height: 20px;
+    function playImageClickAnimation() {
+        birthdayImage.style.animation = 'imageClickBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            birthdayImage.style.animation = '';
+        }, 800);
+    }
+    
+    function createItemParticles(item) {
+        const rect = item.getBoundingClientRect();
+        
+        for (let i = 0; i < 3; i++) {
+            const particle = document.createElement('div');
+            particle.textContent = '✨';
+            particle.style.cssText = `
+                position: fixed;
+                left: ${rect.right + 10}px;
+                top: ${rect.top + Math.random() * rect.height}px;
+                font-size: 0.8rem;
                 pointer-events: none;
-                z-index: 0;
+                z-index: 1000;
+                animation: itemSparkle 2s ease-out forwards;
             `;
             
-            container.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 1000);
-        });
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 2000);
+        }
     }
     
-    // Animación especial para los elementos de la lista
-    const listItems = document.querySelectorAll('.card li');
-    listItems.forEach((item, index) => {
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateX(10px) scale(1.05)';
-            this.style.textShadow = '0 2px 8px rgba(0, 0, 0, 0.3)';
-        });
-        
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateX(0) scale(1)';
-            this.style.textShadow = 'none';
-        });
-    });
-    
-    // Efecto especial para la cita
-    const quote = document.querySelector('.quote');
-    if (quote) {
-        quote.addEventListener('click', function() {
-            this.style.animation = 'none';
-            setTimeout(() => {
-                this.style.animation = 'pulse 0.6s ease-in-out';
-            }, 10);
-            
-            // Crear corazones flotantes
-            createHeartFloating(quote);
-        });
+    function playItemAnimation(item) {
+        item.style.animation = 'itemBounce 0.6s ease-in-out';
+        setTimeout(() => {
+            item.style.animation = '';
+        }, 600);
     }
     
-    // Función para crear corazones flotantes
-    function createHeartFloating(element) {
-        const rect = element.getBoundingClientRect();
-        const hearts = ['💖', '💕', '💗', '💓', '💝'];
+    function createHeartBurst(item) {
+        const rect = item.getBoundingClientRect();
+        const hearts = ['💖', '💕', '💗', '💓'];
         
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 6; i++) {
             const heart = document.createElement('div');
-            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
             heart.style.cssText = `
                 position: fixed;
                 left: ${rect.left + Math.random() * rect.width}px;
-                top: ${rect.top + rect.height}px;
-                font-size: 1.5rem;
+                top: ${rect.top}px;
+                font-size: 1.2rem;
                 pointer-events: none;
                 z-index: 1000;
-                animation: heartFloat 3s ease-out forwards;
+                animation: heartBurst 2.5s ease-out forwards;
             `;
             
             document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2500);
+        }
+    }
+    
+    function createFloatingHearts(element) {
+        const rect = element.getBoundingClientRect();
+        const specialHearts = ['💝', '💖', '🌸', '✨'];
+        
+        for (let i = 0; i < 12; i++) {
+            const heart = document.createElement('div');
+            heart.textContent = specialHearts[Math.floor(Math.random() * specialHearts.length)];
+            heart.style.cssText = `
+                position: fixed;
+                left: ${rect.left + Math.random() * rect.width}px;
+                top: ${rect.bottom}px;
+                font-size: ${1 + Math.random() * 0.5}rem;
+                pointer-events: none;
+                z-index: 1000;
+                animation: floatingHearts 3.5s ease-out forwards;
+            `;
             
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3500);
+        }
+    }
+    
+    function createGentleRipple(x, y) {
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(168, 237, 234, 0.08);
+            transform: scale(0);
+            animation: gentleRipple 1.2s linear;
+            left: ${x - 12}px;
+            top: ${y - 12}px;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            z-index: 0;
+        `;
+        
+        container.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 1200);
+    }
+    
+    function createLinkSparkles(link) {
+        const rect = link.getBoundingClientRect();
+        
+        for (let i = 0; i < 8; i++) {
             setTimeout(() => {
-                heart.remove();
-            }, 3000);
+                const sparkle = document.createElement('div');
+                sparkle.textContent = '✨';
+                sparkle.style.cssText = `
+                    position: fixed;
+                    left: ${rect.left + Math.random() * rect.width}px;
+                    top: ${rect.top + Math.random() * rect.height}px;
+                    font-size: 0.8rem;
+                    pointer-events: none;
+                    z-index: 1000;
+                    animation: linkSparkle 1.5s ease-out forwards;
+                `;
+                
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1500);
+            }, i * 100);
         }
     }
     
-    // Añadir estilos de animación
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+    function startFloatingEmojis() {
+        const dianaEmojis = ['🌸', '💖', '✨', '🦋', '🌺', '💫', '🎀', '💝'];
+        
+        function createFloatingEmoji() {
+            const emoji = document.createElement('div');
+            emoji.textContent = dianaEmojis[Math.floor(Math.random() * dianaEmojis.length)];
+            emoji.style.cssText = `
+                position: fixed;
+                font-size: ${1 + Math.random() * 0.5}rem;
+                left: ${Math.random() * 100}vw;
+                top: 100vh;
+                z-index: 1;
+                pointer-events: none;
+                animation: dianaEmojiFloat ${15 + Math.random() * 10}s linear infinite;
+                opacity: ${0.3 + Math.random() * 0.4};
+            `;
+            
+            document.body.appendChild(emoji);
+            setTimeout(() => emoji.remove(), 25000);
         }
         
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.02);
-            }
+        // Crear emojis inmediatamente
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createFloatingEmoji, i * 500);
         }
         
-        @keyframes heartFloat {
-            0% {
-                opacity: 0;
-                transform: translateY(0) scale(0.5);
-            }
-            20% {
-                opacity: 1;
-                transform: translateY(-20px) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) scale(0.5);
-            }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Mensaje de bienvenida en consola
-    console.log('🎉 ¡Página especial de cumpleaños para Diana cargada! 🎂');
-    
-    // Efecto de typing para el título (opcional)
-    function typeWriter(element, text, speed = 100) {
-        let i = 0;
-        element.innerHTML = '';
-        
-        function type() {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, speed);
-            }
-        }
-        
-        type();
+        // Continuar creando emojis
+        setInterval(createFloatingEmoji, 2500);
     }
     
-    // Aplicar efecto de typing al título después de la animación inicial
-    setTimeout(() => {
-        const title = document.querySelector('h1');
-        if (title) {
-            const originalText = title.textContent;
-            typeWriter(title, originalText, 150);
-        }
-    }, 2000);
-});
-
-// Función para manejar la visibilidad de la página
-document.addEventListener('visibilitychange', function() {
-    const birthdayAudio = document.getElementById('birthday-audio');
-    
-    if (birthdayAudio) {
-        if (document.hidden) {
-            birthdayAudio.pause();
-        } else {
-            birthdayAudio.play().catch(function(error) {
-                console.log('No se pudo reanudar la música:', error);
-            });
-        }
-    }
-});
-
-// Funciones adicionales para efectos especiales
-window.celebrateDiana = function() {
-    // Función global para celebrar (puede ser llamada desde la consola)
-    for (let i = 0; i < 50; i++) {
+    function startBackgroundAnimation() {
+        // Efectos de fondo sutiles
         setTimeout(() => {
-            createFloatingEmoji();
-        }, i * 100);
-    }
-};
-
-// Easter egg: Konami code para sorpresa extra
-let konamiCode = [];
-const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
-
-document.addEventListener('keydown', function(e) {
-    konamiCode.push(e.keyCode);
-    
-    if (konamiCode.length > konamiSequence.length) {
-        konamiCode.shift();
+            document.body.style.backgroundImage = `
+                ${document.body.style.backgroundImage || 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'},
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)
+            `;
+        }, 2000);
     }
     
-    if (konamiCode.length === konamiSequence.length && 
-        konamiCode.every((code, index) => code === konamiSequence[index])) {
+    // ===== CONTENIDO PERSONALIZADO =====
+    
+    function initializePersonalizedContent() {
+        completePersonalizedList();
+        addPersonalizedTouchesForDiana();
+    }
+    
+    function completePersonalizedList() {
+        const listItems = document.querySelectorAll('.card li');
+        const personalizedMessages = [
+            'Siempre tienes una sonrisa que ilumina el día de todos',
+            'Tu creatividad y energía son verdaderamente inspiradoras',
+            'Eres una amiga leal y siempre estás ahí cuando te necesitan',
+            'Y porque simplemente, eres tú 💫'
+        ];
         
-        // Activar sorpresa secreta
-        document.body.style.animation = 'rainbow 2s ease-in-out infinite';
-        alert('🎊 ¡Código secreto activado! ¡Feliz cumpleaños Diana! 🎊');
-        window.celebrateDiana();
+        listItems.forEach((item, index) => {
+            if (item.textContent.includes('[Escribe') || item.textContent.trim() === '') {
+                if (personalizedMessages[index]) {
+                    item.textContent = personalizedMessages[index];
+                }
+            }
+        });
+    }
+    
+    function addPersonalizedTouchesForDiana() {
+        // Agregar efectos especiales después de un delay
+        setTimeout(() => {
+            const title = document.querySelector('h1');
+            if (title) {
+                title.style.textShadow = '0 0 20px rgba(168, 237, 234, 0.5)';
+            }
+        }, 3000);
+    }
+    
+    function showSpecialMessage() {
+        const specialMsg = document.createElement('div');
+        specialMsg.textContent = '¡Diana, eres increíble! 🌟';
+        specialMsg.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            color: white;
+            padding: 1.5rem 2.5rem;
+            border-radius: 25px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            z-index: 10000;
+            box-shadow: 0 20px 60px rgba(168, 237, 234, 0.4);
+            animation: specialMessageAppear 3s ease-in-out forwards;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        `;
         
-        // Añadir animación rainbow
-        const rainbowStyle = document.createElement('style');
-        rainbowStyle.textContent = `
-            @keyframes rainbow {
-                0% { filter: hue-rotate(0deg); }
-                100% { filter: hue-rotate(360deg); }
+        document.body.appendChild(specialMsg);
+        setTimeout(() => specialMsg.remove(), 3000);
+    }
+    
+    function incrementInteraction() {
+        interactionCount++;
+    }
+    
+    // ===== ESTILOS DINÁMICOS =====
+    
+    function addDynamicStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes imageClickBounce {
+                0% { transform: scale(1) rotate(0deg); }
+                25% { transform: scale(1.1) rotate(2deg); }
+                50% { transform: scale(1.05) rotate(-1deg); }
+                75% { transform: scale(1.08) rotate(1deg); }
+                100% { transform: scale(1) rotate(0deg); }
+            }
+            
+            @keyframes itemBounce {
+                0%, 100% { transform: translateX(0) scale(1); }
+                50% { transform: translateX(20px) scale(1.05); }
+            }
+            
+            @keyframes itemSparkle {
+                0% { opacity: 1; transform: translateX(0) scale(1); }
+                100% { opacity: 0; transform: translateX(30px) scale(0.5); }
+            }
+            
+            @keyframes heartBurst {
+                0% { 
+                    opacity: 1; 
+                    transform: translateY(0) scale(1) rotate(0deg); 
+                }
+                100% { 
+                    opacity: 0; 
+                    transform: translateY(-80px) scale(1.5) rotate(180deg); 
+                }
+            }
+            
+            @keyframes floatingHearts {
+                0% { 
+                    opacity: 0; 
+                    transform: translateY(0) scale(0.5); 
+                }
+                20% { 
+                    opacity: 1; 
+                    transform: translateY(-20px) scale(1); 
+                }
+                100% { 
+                    opacity: 0; 
+                    transform: translateY(-120px) scale(0.3) rotate(360deg); 
+                }
+            }
+            
+            @keyframes gentleRipple {
+                to {
+                    transform: scale(6);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes linkSparkle {
+                0% { opacity: 1; transform: scale(1) rotate(0deg); }
+                100% { opacity: 0; transform: scale(1.5) rotate(180deg); }
+            }
+            
+            @keyframes dianaEmojiFloat {
+                0% { transform: translateY(0) rotate(0deg); }
+                100% { transform: translateY(-120vh) rotate(360deg); }
+            }
+            
+            @keyframes quotePulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+            }
+            
+            @keyframes containerExit {
+                0% { 
+                    opacity: 1; 
+                    transform: scale(1) rotate(0deg); 
+                }
+                100% { 
+                    opacity: 0; 
+                    transform: scale(0.8) rotate(-5deg) translateY(50px); 
+                }
+            }
+            
+            @keyframes specialMessageAppear {
+                0% { 
+                    opacity: 0; 
+                    transform: translate(-50%, -50%) scale(0.3); 
+                }
+                20% { 
+                    opacity: 1; 
+                    transform: translate(-50%, -50%) scale(1.1); 
+                }
+                30% { 
+                    transform: translate(-50%, -50%) scale(1); 
+                }
+                90% { 
+                    opacity: 1; 
+                    transform: translate(-50%, -50%) scale(1); 
+                }
+                100% { 
+                    opacity: 0; 
+                    transform: translate(-50%, -50%) scale(0.8); 
+                }
             }
         `;
-        document.head.appendChild(rainbowStyle);
-        
-        // Resetear después de 10 segundos
-        setTimeout(() => {
-            document.body.style.animation = '';
-            konamiCode = [];
-        }, 10000);
+        document.head.appendChild(style);
     }
+    
+    // Inicializar estilos dinámicos
+    addDynamicStyles();
+    
+    // ===== MANEJO DE VISIBILIDAD =====
+    
+    document.addEventListener('visibilitychange', function() {
+        if (birthdayAudio && isAudioPlaying) {
+            if (document.hidden) {
+                birthdayAudio.pause();
+            } else {
+                birthdayAudio.play().catch(error => {
+                    console.log('No se pudo reanudar la música:', error);
+                });
+            }
+        }
+    });
+    
+    // ===== FUNCIONES GLOBALES =====
+    
+    window.celebrateDiana = function() {
+        console.log('🎉 Celebración especial para Diana activada!');
+        
+        // Crear celebración masiva
+        for (let i = 0; i < 60; i++) {
+            setTimeout(() => {
+                createFloatingEmoji();
+            }, i * 80);
+        }
+        
+        // Efecto especial en el contenedor
+        container.style.animation = 'specialCelebration 2s ease-in-out';
+        setTimeout(() => {
+            container.style.animation = '';
+        }, 2000);
+        
+        // Mensaje especial
+        showSpecialMessage();
+    };
+    
+    // Konami code para sorpresa extra
+    let konamiSequence = [];
+    const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
+    
+    document.addEventListener('keydown', function(e) {
+        konamiSequence.push(e.keyCode);
+        
+        if (konamiSequence.length > konamiCode.length) {
+            konamiSequence.shift();
+        }
+        
+        if (konamiSequence.length === konamiCode.length && 
+            konamiSequence.every((code, index) => code === konamiCode[index])) {
+            
+            // Sorpresa secreta activada
+            document.body.style.filter = 'hue-rotate(0deg)';
+            document.body.style.animation = 'rainbow 3s linear infinite';
+            
+            const secretStyle = document.createElement('style');
+            secretStyle.textContent = `
+                @keyframes rainbow {
+                    0% { filter: hue-rotate(0deg); }
+                    100% { filter: hue-rotate(360deg); }
+                }
+                @keyframes specialCelebration {
+                    0%, 100% { transform: scale(1) rotate(0deg); }
+                    25% { transform: scale(1.05) rotate(2deg); }
+                    50% { transform: scale(1.1) rotate(0deg); }
+                    75% { transform: scale(1.05) rotate(-2deg); }
+                }
+            `;
+            document.head.appendChild(secretStyle);
+            
+            window.celebrateDiana();
+            
+            setTimeout(() => {
+                document.body.style.animation = '';
+                document.body.style.filter = '';
+                konamiSequence = [];
+                secretStyle.remove();
+            }, 15000);
+        }
+    });
+    
+    console.log('🎂 Página especial de Diana cargada completamente! 🌸');
 });

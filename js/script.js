@@ -1,71 +1,84 @@
-// Esperar a que el DOM se cargue completamente
+// Configuración inicial y variables globales
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // Referencias a elementos
+    // Referencias a elementos del DOM
     const linkViviana = document.getElementById('linkViviana');
     const linkDiana = document.getElementById('linkDiana');
     const hiddenMessage = document.getElementById('hiddenMessage');
     const surpriseLinks = document.querySelectorAll('.surprise-link');
+    const container = document.querySelector('.container');
     
     // Variables de control
     let clickCount = 0;
     let clickedLinks = new Set();
+    let particleInterval;
     
-    // Función para mostrar el mensaje oculto
-    function showHiddenMessage() {
-        hiddenMessage.classList.add('show');
-        
-        // Añadir un efecto de confeti virtual
-        createConfetti();
+    // Inicializar efectos de fondo
+    initializeBackgroundEffects();
+    
+    // Event listeners principales
+    setupEventListeners();
+    
+    // Inicializar animaciones de entrada
+    initializeEntryAnimations();
+    
+    // ===== FUNCIONES DE INICIALIZACIÓN =====
+    
+    function initializeBackgroundEffects() {
+        createBackgroundParticles();
+        startFloatingEmojis();
     }
     
-    // Función para crear efecto de confeti
-    function createConfetti() {
-        const colors = ['#ff6b6b', '#74b9ff', '#fd79a8', '#55a3ff', '#feca57'];
+    function setupEventListeners() {
+        // Eventos para enlaces de sorpresa
+        if (linkViviana) {
+            linkViviana.addEventListener('click', handleSurpriseClick);
+        }
         
-        for (let i = 0; i < 50; i++) {
-            setTimeout(() => {
-                const confetti = document.createElement('div');
-                confetti.style.cssText = `
-                    position: fixed;
-                    width: 10px;
-                    height: 10px;
-                    background: ${colors[Math.floor(Math.random() * colors.length)]};
-                    left: ${Math.random() * 100}vw;
-                    top: -10px;
-                    z-index: 1000;
-                    pointer-events: none;
-                    border-radius: 50%;
-                    animation: fall ${2 + Math.random() * 3}s linear forwards;
-                `;
-                
-                document.body.appendChild(confetti);
-                
-                // Remover el confetti después de la animación
+        if (linkDiana) {
+            linkDiana.addEventListener('click', handleSurpriseClick);
+        }
+        
+        // Efectos de hover mejorados
+        surpriseLinks.forEach(link => {
+            link.addEventListener('mouseenter', handleLinkHover);
+            link.addEventListener('mouseleave', handleLinkLeave);
+            link.addEventListener('mousedown', handleLinkPress);
+            link.addEventListener('mouseup', handleLinkRelease);
+        });
+        
+        // Efectos del contenedor
+        if (container) {
+            container.addEventListener('mousemove', handleContainerMouseMove);
+            container.addEventListener('mouseenter', handleContainerHover);
+            container.addEventListener('mouseleave', handleContainerLeave);
+        }
+        
+        // Eventos de teclado para accesibilidad
+        document.addEventListener('keydown', handleKeyboard);
+    }
+    
+    function initializeEntryAnimations() {
+        // Animación escalonada de elementos
+        const elements = [
+            { selector: 'h1', delay: 300 },
+            { selector: 'p', delay: 800 },
+            { selector: '#linkViviana', delay: 1200 },
+            { selector: '#linkDiana', delay: 1400 },
+        ];
+        
+        elements.forEach(({ selector, delay }) => {
+            const element = document.querySelector(selector);
+            if (element) {
                 setTimeout(() => {
-                    confetti.remove();
-                }, 5000);
-            }, i * 50);
-        }
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, delay);
+            }
+        });
     }
     
-    // Añadir animación CSS para el confetti
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes fall {
-            0% {
-                transform: translateY(-10px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
+    // ===== MANEJADORES DE EVENTOS =====
     
-    // Event listeners para los enlaces de sorpresa
     function handleSurpriseClick(event) {
         const linkId = event.target.id;
         
@@ -73,154 +86,434 @@ document.addEventListener('DOMContentLoaded', function() {
             clickedLinks.add(linkId);
             clickCount++;
             
-            // Efecto visual al hacer clic
-            event.target.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                event.target.style.transform = '';
-            }, 150);
+            // Efectos visuales al hacer clic
+            createClickEffect(event.target);
+            playClickAnimation(event.target);
             
-            // Mostrar mensaje después de hacer clic en ambos enlaces
+            // Mostrar mensaje después de ambos clics
             if (clickCount >= 2) {
-                setTimeout(showHiddenMessage, 800);
+                setTimeout(() => {
+                    showHiddenMessage();
+                    createCelebrationEffect();
+                }, 800);
             }
         }
     }
     
-    // Añadir event listeners
-    if (linkViviana) {
-        linkViviana.addEventListener('click', handleSurpriseClick);
-    }
-    
-    if (linkDiana) {
-        linkDiana.addEventListener('click', handleSurpriseClick);
-    }
-    
-    // Efecto de hover mejorado para todos los enlaces
-    surpriseLinks.forEach(link => {
-        link.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px) scale(1.02)';
-        });
+    function handleLinkHover(event) {
+        const link = event.target;
+        link.style.transform = 'translateY(-8px) scale(1.02)';
         
-        link.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
+        // Efecto de partículas al hover
+        createHoverParticles(link);
+    }
     
-    // Efecto de ondas al hacer hover en el contenedor
-    const container = document.querySelector('.container');
+    function handleLinkLeave(event) {
+        const link = event.target;
+        link.style.transform = 'translateY(0) scale(1)';
+    }
     
-    container.addEventListener('mousemove', function(e) {
+    function handleLinkPress(event) {
+        event.target.style.transform = 'translateY(-4px) scale(0.98)';
+    }
+    
+    function handleLinkRelease(event) {
+        event.target.style.transform = 'translateY(-8px) scale(1.02)';
+    }
+    
+    function handleContainerMouseMove(event) {
         const rect = container.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
         
+        // Crear ondas sutiles
+        createRippleEffect(x, y);
+        
+        // Efecto de paralaje sutil
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const deltaX = (x - centerX) / centerX;
+        const deltaY = (y - centerY) / centerY;
+        
+        container.style.transform = `
+            translateY(-5px) 
+            rotateX(${deltaY * 2}deg) 
+            rotateY(${deltaX * 2}deg)
+        `;
+    }
+    
+    function handleContainerHover() {
+        container.style.transition = 'transform 0.3s ease';
+    }
+    
+    function handleContainerLeave() {
+        container.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+        container.style.transition = 'transform 0.5s ease';
+    }
+    
+    function handleKeyboard(event) {
+        // Atajos de teclado para accesibilidad
+        if (event.key === 'Enter' || event.key === ' ') {
+            const focusedElement = document.activeElement;
+            if (focusedElement.classList.contains('surprise-link')) {
+                focusedElement.click();
+            }
+        }
+    }
+    
+    // ===== EFECTOS VISUALES =====
+    
+    function showHiddenMessage() {
+        if (hiddenMessage) {
+            hiddenMessage.classList.add('show');
+            
+            // Animación especial para el mensaje
+            setTimeout(() => {
+                hiddenMessage.style.animation = 'messageGlow 2s ease-in-out';
+            }, 500);
+        }
+    }
+    
+    function createClickEffect(element) {
+        const rect = element.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        // Crear efecto de explosión
+        for (let i = 0; i < 12; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'click-particle';
+            particle.style.cssText = `
+                position: fixed;
+                width: 6px;
+                height: 6px;
+                background: ${getRandomColor()};
+                border-radius: 50%;
+                left: ${centerX}px;
+                top: ${centerY}px;
+                z-index: 1000;
+                pointer-events: none;
+            `;
+            
+            document.body.appendChild(particle);
+            
+            // Animar partícula
+            animateClickParticle(particle, i);
+        }
+    }
+    
+    function animateClickParticle(particle, index) {
+        const angle = (Math.PI * 2 * index) / 12;
+        const velocity = 50 + Math.random() * 50;
+        const gravity = 0.8;
+        let velocityX = Math.cos(angle) * velocity;
+        let velocityY = Math.sin(angle) * velocity;
+        let posX = parseFloat(particle.style.left);
+        let posY = parseFloat(particle.style.top);
+        
+        function animate() {
+            velocityY += gravity;
+            posX += velocityX * 0.02;
+            posY += velocityY * 0.02;
+            velocityX *= 0.98;
+            velocityY *= 0.98;
+            
+            particle.style.left = posX + 'px';
+            particle.style.top = posY + 'px';
+            particle.style.opacity = Math.max(0, parseFloat(particle.style.opacity || 1) - 0.02);
+            
+            if (parseFloat(particle.style.opacity || 1) > 0 && posY < window.innerHeight + 100) {
+                requestAnimationFrame(animate);
+            } else {
+                particle.remove();
+            }
+        }
+        
+        animate();
+    }
+    
+    function playClickAnimation(element) {
+        element.style.animation = 'clickPulse 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            element.style.animation = '';
+        }, 600);
+    }
+    
+    function createRippleEffect(x, y) {
         const ripple = document.createElement('div');
+        ripple.className = 'container-ripple';
         ripple.style.cssText = `
             position: absolute;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             transform: scale(0);
-            animation: ripple 0.6s linear;
-            left: ${x - 10}px;
-            top: ${y - 10}px;
-            width: 20px;
-            height: 20px;
+            animation: ripple 0.8s linear;
+            left: ${x - 15}px;
+            top: ${y - 15}px;
+            width: 30px;
+            height: 30px;
             pointer-events: none;
+            z-index: 0;
         `;
         
         container.appendChild(ripple);
         
-        setTimeout(() => {
-            ripple.remove();
-        }, 600);
-    });
+        setTimeout(() => ripple.remove(), 800);
+    }
     
-    // Añadir animación de ondas
-    const rippleStyle = document.createElement('style');
-    rippleStyle.textContent = `
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+    function createHoverParticles(element) {
+        const rect = element.getBoundingClientRect();
+        
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: fixed;
+                    width: 4px;
+                    height: 4px;
+                    background: rgba(255, 255, 255, 0.8);
+                    border-radius: 50%;
+                    left: ${rect.left + Math.random() * rect.width}px;
+                    top: ${rect.bottom}px;
+                    z-index: 1000;
+                    pointer-events: none;
+                    animation: hoverParticle 1.5s ease-out forwards;
+                `;
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 1500);
+            }, i * 100);
+        }
+    }
+    
+    function createCelebrationEffect() {
+        const celebrationEmojis = ['🎉', '🎊', '✨', '🌟', '💖', '🥳', '🎈', '🎁'];
+        
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const emoji = document.createElement('div');
+                emoji.textContent = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+                emoji.style.cssText = `
+                    position: fixed;
+                    font-size: ${1 + Math.random()}rem;
+                    left: ${Math.random() * 100}vw;
+                    top: -50px;
+                    z-index: 1000;
+                    pointer-events: none;
+                    animation: celebrate ${2 + Math.random() * 3}s linear forwards;
+                `;
+                
+                document.body.appendChild(emoji);
+                
+                setTimeout(() => emoji.remove(), 5000);
+            }, i * 50);
+        }
+    }
+    
+    function createBackgroundParticles() {
+        const particleCount = 15;
+        
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'bg-particle';
+            particle.style.cssText = `
+                position: fixed;
+                width: ${2 + Math.random() * 4}px;
+                height: ${2 + Math.random() * 4}px;
+                background: rgba(255, 255, 255, ${0.1 + Math.random() * 0.2});
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: -1;
+                left: ${Math.random() * 100}vw;
+                top: 100vh;
+                animation: floatUp ${15 + Math.random() * 20}s infinite linear;
+            `;
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 35000);
         }
         
-        .container {
-            position: relative;
-            overflow: hidden;
+        // Crear partículas iniciales
+        for (let i = 0; i < particleCount; i++) {
+            setTimeout(createParticle, i * 500);
         }
-    `;
-    document.head.appendChild(rippleStyle);
+        
+        // Continuar creando partículas
+        particleInterval = setInterval(createParticle, 2000);
+    }
     
-    // Mensaje de bienvenida con animación
-    setTimeout(() => {
-        const welcomeText = document.querySelector('h1');
-        welcomeText.style.animation = 'bounce 1s ease-in-out';
-    }, 500);
-    
-    // Añadir animación de rebote
-    const bounceStyle = document.createElement('style');
-    bounceStyle.textContent = `
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
+    function startFloatingEmojis() {
+        const floatingEmojis = ['💝', '🌸', '🦋', '⭐', '💫'];
+        
+        function createFloatingEmoji() {
+            const emoji = document.createElement('div');
+            emoji.textContent = floatingEmojis[Math.floor(Math.random() * floatingEmojis.length)];
+            emoji.style.cssText = `
+                position: fixed;
+                font-size: 1.2rem;
+                left: ${Math.random() * 100}vw;
+                top: 100vh;
+                z-index: -1;
+                pointer-events: none;
+                animation: emojiFloat ${20 + Math.random() * 15}s linear infinite;
+                opacity: ${0.3 + Math.random() * 0.4};
+            `;
+            
+            document.body.appendChild(emoji);
+            
+            setTimeout(() => emoji.remove(), 35000);
         }
-    `;
-    document.head.appendChild(bounceStyle);
+        
+        setInterval(createFloatingEmoji, 3000);
+    }
     
+    // ===== FUNCIONES UTILITARIAS =====
+    
+    function getRandomColor() {
+        const colors = ['#ff9a9e', '#fad0c4', '#a8edea', '#fed6e3', '#ffecd2', '#fcb69f'];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+    
+    // ===== ESTILOS DINÁMICOS =====
+    
+    function addDynamicStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes clickPulse {
+                0% { transform: translateY(-8px) scale(1.02); }
+                50% { transform: translateY(-12px) scale(1.1); }
+                100% { transform: translateY(-8px) scale(1.02); }
+            }
+            
+            @keyframes hoverParticle {
+                0% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100px) scale(0);
+                }
+            }
+            
+            @keyframes celebrate {
+                0% {
+                    opacity: 0;
+                    transform: translateY(-50px) rotate(0deg);
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(100vh) rotate(720deg);
+                }
+            }
+            
+            @keyframes floatUp {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-120vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes emojiFloat {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                }
+                100% {
+                    transform: translateY(-120vh) rotate(180deg);
+                }
+            }
+            
+            @keyframes messageGlow {
+                0%, 100% {
+                    box-shadow: 0 0 20px rgba(255, 154, 158, 0.3);
+                }
+                50% {
+                    box-shadow: 0 0 40px rgba(255, 154, 158, 0.6);
+                }
+            }
+            
+            .container {
+                transform-style: preserve-3d;
+                perspective: 1000px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Inicializar estilos dinámicos
+    addDynamicStyles();
+    
+    // ===== LIMPIEZA =====
+    
+    // Limpiar intervalos cuando se abandona la página
+    window.addEventListener('beforeunload', () => {
+        if (particleInterval) {
+            clearInterval(particleInterval);
+        }
+    });
 });
 
-// Función adicional para efectos de partículas en el fondo
-function createBackgroundParticles() {
-    const particleCount = 20;
+// ===== FUNCIONES GLOBALES =====
+
+// Función para celebración manual (disponible en consola)
+window.celebrate = function() {
+    const container = document.querySelector('.container');
+    if (container) {
+        container.style.animation = 'bounce 1s ease-in-out 3';
+    }
     
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.style.cssText = `
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: -1;
-            left: ${Math.random() * 100}vw;
-            top: ${Math.random() * 100}vh;
-            animation: float ${10 + Math.random() * 20}s infinite linear;
-        `;
-        
-        document.body.appendChild(particle);
+    // Crear efectos especiales
+    for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.textContent = ['🎉', '🎊', '✨'][Math.floor(Math.random() * 3)];
+            confetti.style.cssText = `
+                position: fixed;
+                left: ${Math.random() * 100}vw;
+                top: -50px;
+                font-size: 2rem;
+                z-index: 1000;
+                pointer-events: none;
+                animation: celebrate 3s linear forwards;
+            `;
+            
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 3000);
+        }, i * 30);
     }
-}
+};
 
-// Animación de flotación para partículas
-const floatStyle = document.createElement('style');
-floatStyle.textContent = `
-    @keyframes float {
-        0% {
-            transform: translateY(0px) rotate(0deg);
-            opacity: 0;
-        }
-        10% {
-            opacity: 1;
-        }
-        90% {
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-100vh) rotate(360deg);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(floatStyle);
+// Función de debug
+window.debugSurprise = function() {
+    console.log('🎂 Debug de página de cumpleaños:');
+    console.log('- Enlaces clickeados:', document.querySelectorAll('.surprise-link').length);
+    console.log('- Mensaje oculto visible:', document.getElementById('hiddenMessage').classList.contains('show'));
+    console.log('- Partículas activas:', document.querySelectorAll('.bg-particle').length);
+};
 
-// Inicializar partículas cuando se carga la página
-window.addEventListener('load', createBackgroundParticles);
+console.log('🎉 Sistema de sorpresa de cumpleaños cargado exitosamente! 🎂');
