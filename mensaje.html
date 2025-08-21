@@ -3,16 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mensaje Final ❤️</title>
-    <link rel="stylesheet" href="/css/mensaje.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>💕 Para Diana & Viviana 💜 - Gemelas Especiales</title>
+    <link rel="stylesheet" href="css/mensaje.css">
 </head>
 <body>
-    <div class="container">
-        <h1>¡Para Viviana y Diana! 🥰</h1>
-        <p>Este mensaje es para agradecerles por su amistad. Han sido un pilar fundamental en mi vida y no puedo imaginarla sin ustedes. Les quiero mucho a ambas. Espero que este pequeño detalle les haya gustado. ❤️</p>
-        <button id="finalButton">¡Gracias!</button>
+    <!-- FLOATING TWIN ELEMENTS -->
+    <div class="floating-twins" id="floatingTwins"></div>
+
+    <div class="main-container">
+        <!-- TWIN HEADER -->
+        <header class="twin-header">
+            <div class="twin-title">
+                <span class="diana-name">Diana</span>
+                <span class="twin-connector">♊</span>
+                <span class="viviana-name">Viviana</span>
+            </div>
+            <p class="twin-subtitle">Hermanas Gemelas • Almas Conectadas • Cumpleaños Doble</p>
+            <span class="gemini-symbol">👭</span>
+        </header>
+
+        <!-- MENSAJE PRINCIPAL PARA AMBAS -->
+        <section class="twin-section twin-bond">
+            <h2 class="section-title">
+                <span class="twin-title-gradient">💝 Mensaje Especial para las Dos</span>
+            </h2>
+            <div class="twin-message">
+                <p><strong>[ESPACIO PARA TU MENSAJE PRINCIPAL PARA AMBAS GEMELAS]</strong></p>
+                <br>
+                <p><em>[Aquí puedes agregar más párrafos sobre su conexión especial, lo que significan para ti, recuerdos juntas, y cualquier cosa que quieras decirles en este día tan especial que comparten]</em></p>
+            </div>
+        </section>
+
+        <!-- GALERÍA DE MOMENTOS GEMELAS -->
+        <section class="twin-section">
+            <h2 class="section-title">
+                <span class="twin-title-gradient">📸 Momentos de Gemelas</span>
+            </h2>
+            
+            <div class="twin-gallery">
+                <!-- FOTO PRINCIPAL JUNTAS -->
+                <div class="media-placeholder">
+                    <div class="placeholder-icon">👭</div>
+                    <p class="placeholder-text">
+                        <strong>FOTO PRINCIPAL DE LAS GEMELAS</strong><br>
+                        Reemplaza con: &lt;img src="ruta/foto-juntas.jpg" alt="Diana y Viviana" style="max-width: 100%; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);"&gt;
+                    </p>
+                </div>
+
+                <!-- COLLAGE DE RECUERDOS -->
+                <div class="media-placeholder">
+                    <div class="placeholder-icon">🖼️</div>
+                    <p class="placeholder-text">
+                        <strong>COLLAGE DE RECUERDOS</strong><br>
+                        Fotos de diferentes momentos, aventuras juntas, celebraciones pasadas, momentos divertidos
+                    </p>
+                </div>
+
+                <!-- VIDEO ESPECIAL -->
+                <div class="media-placeholder">
+                    <div class="placeholder-icon">🎬</div>
+                    <p class="placeholder-text">
+                        <strong>VIDEO DE CUMPLEAÑOS</strong><br>
+                        &lt;video controls style="max-width: 100%; border-radius: 15px;"&gt;&lt;source src="video-gemelas.mp4"&gt;&lt;/video&gt;
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÚSICA PARA GEMELAS -->
+        <section class="twin-section music-twin-section">
+            <h2 class="section-title" style="color: white;">🎵 Soundtrack de Gemelas</h2>
+            <p style="margin-bottom: 2rem; opacity: 0.95; position: relative; z-index: 1; font-size: 1.2rem;">
+                Música especial para celebrar juntas
+            </p>
+            
+            <div class="twin-music-controls">
+                <!-- PLAYLIST GEMELAS -->
+                <div style="color: white; text-align: center; padding: 3rem; border: 3px solid rgba(255,255,255,0.4); border-radius: 20px; backdrop-filter: blur(15px); background: rgba(255,255,255,0.1); max-width: 500px;">
+                    <div style="font-size: 4rem; margin-bottom: 1.5rem;">🎶</div>
+                    <p style="font-weight: 700; font-size: 1.3rem;"><strong>PLAYLIST ESPECIAL</strong></p>
+                    <p style="opacity: 0.9; margin-top: 1rem; line-height: 1.7;">
+                        Reemplaza este div con:<br>
+                        &lt;audio controls style="width: 100%; margin-top: 1rem;"&gt;<br>
+                        &nbsp;&nbsp;&lt;source src="cancion-gemelas.mp3" type="audio/mpeg"&gt;<br>
+                        &lt;/audio&gt;
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PODERES DE GEMELAS -->
+        <section class="twin-section">
+            <h2 class="section-title">
+                <span class="twin-title-gradient">⚡ Poderes de Gemelas</span>
+            </h2>
+            <p style="text-align: center; margin-bottom: 3rem; color: #5f27cd; font-size: 1.2rem;">
+                Elementos interactivos que celebran su conexión especial
+            </p>
+            
+            <div class="twin-powers">
+                <button class="power-card" onclick="activateTwinPower(1)">
+                    <span class="power-icon">🔮</span>
+                    <strong>Conexión Mental</strong><br>
+                    <small>Activar telepatía de gemelas</small>
+                </button>
+                
+                <button class="power-card" onclick="activateTwinPower(2)">
+                    <span class="power-icon">💫</span>
+                    <strong>Energía Dual</strong><br>
+                    <small>Duplicar la diversión</small>
+                </button>
+                
+                <button class="power-card" onclick="activateTwinPower(3)">
+                    <span class="power-icon">🌟</span>
+                    <strong>Sincronización</strong><br>
+                    <small>Activar modo gemelas</small>
+                </button>
+                
+                <button class="power-card" onclick="createTwinCelebration()">
+                    <span class="power-icon">🎊</span>
+                    <strong>Celebración Doble</strong><br>
+                    <small>¡Fiesta de gemelas!</small>
+                </button>
+            </div>
+
+            <!-- EFECTOS ESPECIALES OCULTOS -->
+            <div id="twinPower1" class="twin-message hidden" style="background: linear-gradient(135deg, #ff9ec7, #9b59b6); color: white;">
+                <p><strong>[EFECTO ESPECIAL #1 - Agrega aquí un mensaje sobre su conexión mental, anécdotas de cómo se entienden sin palabras, etc.]</strong></p>
+            </div>
+            
+            <div id="twinPower2" class="twin-message hidden" style="background: linear-gradient(135deg, #3498db, #e74c3c); color: white;">
+                <p><strong>[EFECTO ESPECIAL #2 - Mensaje sobre cómo juntas son más fuertes, se divierten el doble, etc.]</strong></p>
+            </div>
+            
+            <div id="twinPower3" class="twin-message hidden" style="background: linear-gradient(135deg, #1abc9c, #f39c12); color: white;">
+                <p><strong>[EFECTO ESPECIAL #3 - Mensaje sobre su sincronización, cómo hacen las mismas cosas al mismo tiempo, etc.]</strong></p>
+            </div>
+        </section>
+
+        <!-- MENSAJE FINAL PARA AMBAS -->
+        <section class="twin-section twin-bond">
+            <h2 class="section-title">
+                <span class="twin-title-gradient">✨ Para Cerrar con Broche de Oro</span>
+            </h2>
+            <div class="twin-message">
+                <p><strong>[MENSAJE FINAL PERSONALIZADO PARA AMBAS GEMELAS]</strong></p>
+                <br>
+                <p style="text-align: center; font-size: 1.5rem;">
+                    <strong>🌸 Diana & Viviana 💜</strong><br>
+                    <em>Gemelas por destino, hermanas por elección, especiales por naturaleza</em>
+                </p>
+                <br>
+                <p style="text-align: center; font-size: 1.6rem; color: #9b59b6;">
+                    <strong>¡Que tengan el mejor cumpleaños juntas! 🎂👭✨</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- NAVEGACIÓN -->
+        <nav class="twin-navigation">
+            <h3 style="color: #5f27cd; margin-bottom: 2rem; font-size: 1.4rem;">¿A dónde quieren ir ahora?</h3>
+            <div class="nav-buttons">
+                <a href="index.html?direct=true" class="nav-btn inicio">🏠 Regresar al Inicio</a>
+                <a href="diana.html" class="nav-btn diana">🌸 Página de Diana</a>
+                <a href="viviana.html" class="nav-btn viviana">💜 Página de Viviana</a>
+            </div>
+        </nav>
     </div>
-    <script src="/js/mensaje.js"></script>
+
+    <!-- AUDIO FILES -->
+    <audio id="twinSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/magic-chime-02.wav" type="audio/wav">
+    </audio>
+    <audio id="celebrationSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/party-horn.wav" type="audio/wav">
+    </audio>
+
+    <script src="js/mensaje.js"></script>
 </body>
 </html>

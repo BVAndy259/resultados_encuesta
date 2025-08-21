@@ -3,35 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Feliz Cumpleaños Viviana! 🎂</title>
-    <link rel="stylesheet" href="/css/viviana.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>¡Feliz Cumpleaños Viviana! 💜</title>
+    <link rel="stylesheet" href="css/viviana.css">
 </head>
 <body>
-    <div class="container">
-        <h1>¡Hola Viviana! 😎</h1>
-        <p>Esta es tu sorpresa especial. ¡Feliz Cumpleaños! Espero que te saque una sonrisa 🤍</p>
+    <!-- FLOATING STARS BACKGROUND -->
+    <div class="floating-stars" id="floatingStars"></div>
 
-        <img src="" alt="pastel de cumpleaños" class="birthday-image">
+    <div class="main-container">
+        <!-- HEADER -->
+        <header class="header-section">
+            <h1 class="main-title">¡Feliz Cumpleaños Viviana!</h1>
+            <p class="subtitle">Celebrando a una persona extraordinaria</p>
+            <div>
+                <span class="birthday-emoji">💜</span>
+                <span class="birthday-emoji">🎂</span>
+                <span class="birthday-emoji">⭐</span>
+                <span class="birthday-emoji">🎊</span>
+            </div>
+        </header>
 
-        <div class="card">
-            <h2>✨ Eres increíble porque...</h2>
-            <ul>
-                <li>Siempre sabes cómo animar a los demás.</li>
-                <li>Tu risa contagiosa alegra cualquier lugar.</li>
-                <li>Tienes una energía única e inigualable.</li>
-                <li>Y porque simplemente, eres tú 💫</li>
-            </ul>
-        </div>
+        <!-- MENSAJE PERSONAL PRINCIPAL -->
+        <section class="content-section confident-glow">
+            <h2 class="section-title">💜 Mensaje Especial Para Ti</h2>
+            <div class="message-content">
+                <p><strong>[ESPACIO PARA TU MENSAJE PRINCIPAL PERSONALIZADO PARA VIVIANA]</strong></p>
+                <br>
+                <p><em>[Aquí puedes agregar más párrafos, recuerdos especiales, o cualquier cosa que quieras decirle a Viviana en su día especial]</em></p>
+            </div>
+        </section>
 
-        <div class="quote">
-            <p>“La vida es mejor cuando sonríes, y tú haces que muchos sonrían.”</p>
-        </div>
+        <!-- SECCIÓN DE FOTOS -->
+        <section class="content-section structured-entrance">
+            <h2 class="section-title">📸 Galería Personal</h2>
+            
+            <!-- FOTO PRINCIPAL -->
+            <div class="photo-placeholder">
+                <div class="placeholder-icon">📷</div>
+                <p class="placeholder-text">
+                    <strong>FOTO PRINCIPAL DE VIVIANA</strong><br>
+                    Reemplaza este div con: &lt;img src="ruta/a/foto.jpg" alt="Viviana" style="max-width: 100%; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);"&gt;
+                </p>
+            </div>
 
-        <a href="index.html" class="surprise-link">Volver al inicio</a>
+            <!-- COLLAGE DE FOTOS -->
+            <div class="photo-placeholder">
+                <div class="placeholder-icon">🖼️</div>
+                <p class="placeholder-text">
+                    <strong>COLLAGE DE MOMENTOS</strong><br>
+                    Aquí puedes agregar múltiples fotos de Viviana, momentos especiales, aventuras juntos, etc.
+                </p>
+            </div>
+        </section>
 
-        <audio id="birthday-audio" src="path/to/your/song.mp3" loop autoplay></audio>
+        <!-- SECCIÓN DE MÚSICA -->
+        <section class="content-section music-section">
+            <h2 class="section-title" style="color: white;">🎵 Tu Soundtrack Personal</h2>
+            <p style="margin-bottom: 2rem; opacity: 0.9; position: relative; z-index: 1;">Una melodía especial para acompañar tu celebración</p>
+            
+            <div class="music-controls">
+                <!-- AUDIO PLACEHOLDER -->
+                <div style="color: white; text-align: center; padding: 2.5rem; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; flex: 1; max-width: 450px; backdrop-filter: blur(10px); background: rgba(255,255,255,0.1);">
+                    <div style="font-size: 3.5rem; margin-bottom: 1rem;">🎶</div>
+                    <p style="font-weight: 600; font-size: 1.2rem;"><strong>REPRODUCTOR DE MÚSICA</strong></p>
+                    <p style="opacity: 0.9; margin-top: 1rem; line-height: 1.6;">
+                        Reemplaza este div con:<br>
+                        &lt;audio controls style="width: 100%; margin-top: 1rem;"&gt;<br>
+                        &nbsp;&nbsp;&lt;source src="ruta/a/cancion.mp3" type="audio/mpeg"&gt;<br>
+                        &lt;/audio&gt;
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE VIDEO/GIF -->
+        <section class="content-section">
+            <h2 class="section-title">🎬 Contenido Multimedia</h2>
+            
+            <!-- VIDEO PLACEHOLDER -->
+            <div class="video-placeholder">
+                <div class="placeholder-icon">🎥</div>
+                <p class="placeholder-text">
+                    <strong>VIDEO PERSONALIZADO PARA VIVIANA</strong><br>
+                    Reemplaza con: &lt;video controls style="max-width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"&gt;&lt;source src="ruta/a/video.mp4"&gt;&lt;/video&gt;
+                </p>
+            </div>
+
+            <!-- GIF PLACEHOLDER -->
+            <div class="gif-placeholder">
+                <div class="placeholder-icon">✨</div>
+                <p class="placeholder-text">
+                    <strong>GIFS & ANIMACIONES</strong><br>
+                    Agrega GIFs divertidos, memes, animaciones o contenido visual que le guste a Viviana
+                </p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE LOGROS/INTERACTIVA -->
+        <section class="content-section">
+            <h2 class="section-title">🏆 Zona de Logros</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #5f27cd; font-weight: 500;">
+                Algunos reconocimientos especiales y elementos interactivos para Viviana
+            </p>
+            
+            <div class="interactive-zone">
+                <button class="achievement-button" onclick="unlockAchievement(1)">
+                    🎯 Desbloquear Logro #1
+                </button>
+                <button class="achievement-button" onclick="unlockAchievement(2)">
+                    🌟 Desbloquear Logro #2
+                </button>
+                <button class="achievement-button" onclick="unlockAchievement(3)">
+                    💎 Desbloquear Logro #3
+                </button>
+                <button class="achievement-button" onclick="createStarShower()">
+                    ⭐ Lluvia de Estrellas
+                </button>
+            </div>
+
+            <!-- ÁREA DE LOGROS DESBLOQUEADOS -->
+            <div id="achievement1" class="message-content hidden" style="background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white;">
+                <p><strong>[LOGRO DESBLOQUEADO #1 - Agrega aquí un mensaje especial, reconocimiento, o sorpresa para Viviana]</strong></p>
+            </div>
+            
+            <div id="achievement2" class="message-content hidden" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white;">
+                <p><strong>[LOGRO DESBLOQUEADO #2 - Otro reconocimiento especial o contenido sorpresa]</strong></p>
+            </div>
+            
+            <div id="achievement3" class="message-content hidden" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white;">
+                <p><strong>[LOGRO DESBLOQUEADO #3 - Más contenido personalizado y especial para Viviana]</strong></p>
+            </div>
+
+            <!-- BADGES AREA -->
+            <div id="badgesArea" style="text-align: center; margin-top: 2rem;"></div>
+        </section>
+
+        <!-- MENSAJE FINAL -->
+        <section class="content-section confident-glow">
+            <h2 class="section-title">🎊 Reflexión Final</h2>
+            <div class="message-content">
+                <p><strong>[MENSAJE DE CIERRE PERSONALIZADO PARA VIVIANA]</strong></p>
+                <br>
+                <p style="text-align: center; font-size: 1.4rem; color: #9b59b6;">
+                    <strong>¡Que este nuevo año te traiga todo lo que mereces! 💜⭐</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- NAVEGACIÓN -->
+        <nav class="navigation-section">
+            <h3 style="color: #5f27cd; margin-bottom: 1rem; font-size: 1.3rem;">¿Dónde quieres continuar la celebración?</h3>
+            <div class="nav-buttons">
+                <a href="index.html?direct=true" class="nav-btn back">🏠 Regresar al Inicio</a>
+                <a href="diana.html" class="nav-btn diana">🌸 Página de Diana</a>
+                <a href="mensaje.html" class="nav-btn mensaje">💌 Mensaje para Ambas</a>
+            </div>
+        </nav>
     </div>
-    <script src="/js/viviana.js"></script>
-</body>
-</html>
+
+    <!-- AUDIO FILES -->
+    <audio id="achievementSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/bell-ringing-04.wav" type="audio/wav">
+    </audio>
+    <audio id="successSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/success-sound.wav" type="audio/wav">
+    </audio>
+
+    <script src="js/viviana.js"></script>

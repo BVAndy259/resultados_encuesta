@@ -3,35 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Feliz Cumpleaños Diana! 🎂</title>
-    <link rel="stylesheet" href="/css/diana.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>¡Feliz Cumpleaños Diana! 🌸</title>
+    <link rel="stylesheet" href="css/diana.css">
 </head>
 <body>
-    <div class="container">
-        <h1>¡Hola Diana! 🤠</h1>
-        <p>Esta es tu sorpresa especial. ¡Feliz Cumpleaños! Espero que te saque una sonrisa 🤍</p>
+    <!-- FLOATING HEARTS BACKGROUND -->
+    <div class="floating-hearts" id="floatingHearts"></div>
 
-        <img src="https://source.unsplash.com/400x400/?birthday-party" alt="celebración de cumpleaños" class="birthday-image">
+    <div class="main-container">
+        <!-- HEADER -->
+        <header class="header-section">
+            <h1 class="main-title">¡Feliz Cumpleaños Diana!</h1>
+            <p class="subtitle">Un día especial para una persona increíble</p>
+            <div>
+                <span class="birthday-emoji">🌸</span>
+                <span class="birthday-emoji">🎂</span>
+                <span class="birthday-emoji">💝</span>
+                <span class="birthday-emoji">🎉</span>
+            </div>
+        </header>
 
-        <div class="card">
-            <h2>✨ Eres increíble porque...</h2>
-            <ul>
-                <li>[Escribe la primera razón aquí]</li>
-                <li>[Escribe la segunda razón aquí]</li>
-                <li>[Escribe la tercera razón aquí]</li>
-                <li>Y porque simplemente, eres tú 💫</li>
-            </ul>
-        </div>
+        <!-- MENSAJE PERSONAL PRINCIPAL -->
+        <section class="content-section gentle-glow">
+            <h2 class="section-title">💕 Mensaje Especial Para Ti</h2>
+            <div class="message-content">
+                <!-- AQUÍ PUEDES PONER TU MENSAJE PERSONAL PRINCIPAL PARA DIANA -->
+                <p><strong>dahsfdjhvbasjhvfbjhasvf</strong></p>
+                <br>
+                <p><em>[Aquí puedes agregar más párrafos, recuerdos especiales, o cualquier cosa que quieras decirle a Diana en su día especial]</em></p>
+            </div>
+        </section>
 
-        <div class="quote">
-            <p>“La vida es mejor cuando sonríes, y tú haces que muchos sonrían.”</p>
-        </div>
+        <!-- SECCIÓN DE FOTOS -->
+        <section class="content-section shy-entrance">
+            <h2 class="section-title">📸 Momentos Especiales</h2>
+            
+            <!-- FOTO PRINCIPAL -->
+            <div class="photo-placeholder">
+                <div class="placeholder-icon">📷</div>
+                <p class="placeholder-text">
+                    <strong>FOTO PRINCIPAL DE DIANA</strong><br>
+                    Reemplaza este div con: &lt;img src="ruta/a/foto.jpg" alt="Diana" style="max-width: 100%; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);"&gt;
+                </p>
+            </div>
 
-        <a href="index.html" class="surprise-link">Volver al inicio</a>
+            <!-- GALERÍA DE FOTOS -->
+            <div class="photo-placeholder">
+                <div class="placeholder-icon">🖼️</div>
+                <p class="placeholder-text">
+                    <strong>GALERÍA DE FOTOS</strong><br>
+                    Aquí puedes agregar múltiples fotos de Diana, recuerdos juntos, momentos especiales, etc.
+                </p>
+            </div>
+        </section>
 
-        <audio id="birthday-audio" src="path/to/your/song.mp3" loop autoplay></audio>
+        <!-- SECCIÓN DE MÚSICA -->
+        <section class="content-section music-section">
+            <h2 class="section-title" style="color: white;">🎵 Tu Música Favorita</h2>
+            <p style="margin-bottom: 2rem; opacity: 0.9;">Una canción especial para tu día especial</p>
+            
+            <div class="music-controls">
+                <!-- AUDIO PLACEHOLDER -->
+                <div style="color: white; text-align: center; padding: 2rem; border: 2px dashed rgba(255,255,255,0.5); border-radius: 15px; flex: 1; max-width: 400px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎶</div>
+                    <p><strong>REPRODUCTOR DE MÚSICA</strong></p>
+                    <p style="opacity: 0.8; margin-top: 1rem;">
+                        Reemplaza este div con:<br>
+                        &lt;audio controls style="width: 100%;"&gt;<br>
+                        &nbsp;&nbsp;&lt;source src="ruta/a/cancion.mp3" type="audio/mpeg"&gt;<br>
+                        &lt;/audio&gt;
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE VIDEO/GIF -->
+        <section class="content-section">
+            <h2 class="section-title">🎬 Video Especial</h2>
+            
+            <!-- VIDEO PLACEHOLDER -->
+            <div class="video-placeholder">
+                <div class="placeholder-icon">🎥</div>
+                <p class="placeholder-text">
+                    <strong>VIDEO PERSONALIZADO</strong><br>
+                    Reemplaza con: &lt;video controls style="max-width: 100%; border-radius: 15px;"&gt;&lt;source src="ruta/a/video.mp4"&gt;&lt;/video&gt;
+                </p>
+            </div>
+
+            <!-- GIF PLACEHOLDER -->
+            <div class="gif-placeholder">
+                <div class="placeholder-icon">✨</div>
+                <p class="placeholder-text">
+                    <strong>GIF DIVERTIDO</strong><br>
+                    Agrega GIFs divertidos, memes, o animaciones que le gusten a Diana
+                </p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN INTERACTIVA -->
+        <section class="content-section">
+            <h2 class="section-title">🎮 Zona Divertida</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #636e72;">
+                ¡Algunos elementos interactivos para que Diana se divierta!
+            </p>
+            
+            <div class="interactive-zone">
+                <button class="fun-button" onclick="showSurprise(1)">
+                    🎁 Sorpresa #1
+                </button>
+                <button class="fun-button" onclick="showSurprise(2)">
+                    💫 Sorpresa #2
+                </button>
+                <button class="fun-button" onclick="showSurprise(3)">
+                    🌟 Sorpresa #3
+                </button>
+                <button class="fun-button" onclick="createMoreHearts()">
+                    💕 Más Corazones
+                </button>
+            </div>
+
+            <!-- ÁREA DE SORPRESAS OCULTAS -->
+            <div id="surprise1" class="message-content hidden" style="background: linear-gradient(135deg, #ff9ec7, #ffd1dc); color: white;">
+                <p><strong>[SORPRESA OCULTA #1 - Agrega aquí un mensaje secreto, foto, o cualquier cosa especial]</strong></p>
+            </div>
+            
+            <div id="surprise2" class="message-content hidden" style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white;">
+                <p><strong>[SORPRESA OCULTA #2 - Otro mensaje especial o contenido sorpresa]</strong></p>
+            </div>
+            
+            <div id="surprise3" class="message-content hidden" style="background: linear-gradient(135deg, #fdcb6e, #e17055); color: white;">
+                <p><strong>[SORPRESA OCULTA #3 - Más contenido personalizado para Diana]</strong></p>
+            </div>
+        </section>
+
+        <!-- MENSAJE FINAL -->
+        <section class="content-section gentle-glow">
+            <h2 class="section-title">🌟 Para Finalizar</h2>
+            <div class="message-content">
+                <p><strong>[MENSAJE DE CIERRE PERSONALIZADO]</strong></p>
+                <br>
+                <p style="text-align: center; font-size: 1.4rem; color: #ff6b9d;">
+                    <strong>¡Que tengas el mejor cumpleaños de todos! 🎂✨</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- NAVEGACIÓN -->
+        <nav class="navigation-section">
+            <h3 style="color: #636e72; margin-bottom: 1rem;">¿A dónde quieres ir ahora?</h3>
+            <div class="nav-buttons">
+                <a href="index.html?direct=true" class="nav-btn back">🏠 Regresar al Inicio</a>
+                <a href="viviana.html" class="nav-btn viviana">🌺 Página de Viviana</a>
+                <a href="mensaje.html" class="nav-btn mensaje">💌 Mensaje para Ambas</a>
+            </div>
+        </nav>
     </div>
-    <script src="/js/diana.js"></script>
+
+    <!-- AUDIO FILES -->
+    <audio id="clickSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/bell-ringing-05.wav" type="audio/wav">
+    </audio>
+
+    <script src="js/diana.js"></script>
 </body>
 </html>
